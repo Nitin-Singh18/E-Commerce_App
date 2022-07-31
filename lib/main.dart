@@ -1,5 +1,6 @@
 import 'package:e_commerce/authentication/login_screen/login_screen_view.dart';
 import 'package:e_commerce/authentication/otp_verification_screen/otp_screen_view.dart';
+import 'package:e_commerce/home_screen/home_screen_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: LoginScreen(),
+      home: HomeScreenView(),
     );
   }
 }
