@@ -1,6 +1,8 @@
+import 'package:e_commerce/categories_and_featured_screen/categories_and_featured_screen.dart';
 import 'package:e_commerce/home_screen/drawer.dart';
 import 'package:e_commerce/home_screen/home_screen_controller.dart';
 import 'package:e_commerce/home_screen/model/categories_model.dart';
+import 'package:e_commerce/item-screen/items_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,7 +83,10 @@ class HomeScreenView extends StatelessWidget {
 
                       //Categories
 
-                      categoriesTitle(size, "All Cateogories", () {}),
+                      categoriesTitle(size, "All Cateogories", () {
+                        Get.to(() => CategoriesAndFeaturedScreen(
+                            model: controller.categoriesData));
+                      }),
 
                       listViewBuilder(size, controller.categoriesData),
 
@@ -89,7 +94,10 @@ class HomeScreenView extends StatelessWidget {
                         height: size.height / 25,
                       ),
 
-                      categoriesTitle(size, "Featured", () {}),
+                      categoriesTitle(size, "Featured", () {
+                        Get.to(() => CategoriesAndFeaturedScreen(
+                            model: controller.featuredData));
+                      }),
 
                       listViewBuilder(size, controller.featuredData),
                     ],
@@ -124,29 +132,34 @@ class HomeScreenView extends StatelessWidget {
   Widget listViewBuilderItems(Size size, CategoriesModel categories) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        height: size.height / 7,
-        width: size.width / 4.2,
-        child: Column(
-          children: [
-            Container(
-              height: size.height / 10,
-              width: size.width / 2.2,
-              decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: NetworkImage(categories.image))),
-            ),
-            Expanded(
-              child: SizedBox(
-                child: Text(
-                  categories.title,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 14),
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => ItemsScreen());
+        },
+        child: SizedBox(
+          height: size.height / 7,
+          width: size.width / 4.2,
+          child: Column(
+            children: [
+              Container(
+                height: size.height / 10,
+                width: size.width / 2.2,
+                decoration: BoxDecoration(
+                    image:
+                        DecorationImage(image: NetworkImage(categories.image))),
+              ),
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    categories.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 14),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -164,7 +177,7 @@ class HomeScreenView extends StatelessWidget {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           TextButton(
-            onPressed: () => function,
+            onPressed: () => function(),
             child: const Text(
               "View More",
               style: TextStyle(
