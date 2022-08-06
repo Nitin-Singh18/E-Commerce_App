@@ -134,7 +134,10 @@ class HomeScreenView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => ItemsScreen());
+          Get.to(() => ItemsScreen(
+                categoryId: categories.id,
+                categoryTitle: categories.title,
+              ));
         },
         child: SizedBox(
           height: size.height / 7,

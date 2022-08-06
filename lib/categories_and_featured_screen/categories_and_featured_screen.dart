@@ -18,7 +18,7 @@ class CategoriesAndFeaturedScreen extends StatelessWidget {
           child: Scaffold(
         appBar: AppBar(
           title: const Text("All Categories"),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: const Color.fromRGBO(8, 42, 58, 1),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
@@ -40,7 +40,10 @@ class CategoriesAndFeaturedScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => const ItemsScreen());
+          Get.to(() => ItemsScreen(
+                categoryId: categroies.id,
+                categoryTitle: categroies.title,
+              ));
         },
         child: SizedBox(
           height: size.height / 7,
