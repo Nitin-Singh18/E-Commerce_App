@@ -31,9 +31,9 @@ class SearchScreen extends SearchDelegate {
     return GetBuilder<ItemScreenController>(builder: (value) {
       if (!value.isSearchLoading) {
         return ListView.builder(
-          itemCount: value.itemsData.length,
+          itemCount: value.searchResults.length,
           itemBuilder: (context, index) {
-            return listViewBuilderItems(Get.size, value.itemsData[index]);
+            return listViewBuilderItems(Get.size, value.searchResults[index]);
           },
         );
       } else {
@@ -51,9 +51,9 @@ class SearchScreen extends SearchDelegate {
     return GetBuilder<ItemScreenController>(builder: (value) {
       if (!value.isSearchLoading) {
         return ListView.builder(
-          itemCount: value.itemsData.length,
+          itemCount: value.searchResults.length,
           itemBuilder: (context, index) {
-            return listViewBuilderItems(Get.size, value.itemsData[index]);
+            return listViewBuilderItems(Get.size, value.searchResults[index]);
           },
         );
       } else {

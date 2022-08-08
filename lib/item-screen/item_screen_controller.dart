@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/item-screen/items_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ItemScreenController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final ScrollController scrollController = ScrollController();
 
   String categoryId = "";
 
@@ -14,6 +16,11 @@ class ItemScreenController extends GetxController {
   List<ItemsModel> searchResults = [];
 
   bool isLoading = true, isSearchLoading = false;
+
+  bool hasMoreData = true;
+  var isLoading1 = false.obs;
+  DocumentSnapshot? lastDocument;
+  int documentLimit = 5;
 
   //Function to get data for item screen
 
@@ -29,7 +36,6 @@ class ItemScreenController extends GetxController {
             value.docs.map((e) => ItemsModel.fromJson(e.data())).toList();
 
         isLoading = false;
-        // print(itemsData[0]);
         print(categoryId);
         print(categoryTitle);
 
@@ -40,6 +46,72 @@ class ItemScreenController extends GetxController {
     }
   }
 
+  void getPaginatedData() async {
+    if (hasMoreData) {
+      if (!isLoading1.value) {
+        await getSubCategoryDataInParts();
+      }
+    } else {
+      print("No more data");
+    }
+  }
+
+  //function to get data in parts
+
+  Future<void> getSubCategoryDataInParts() async {
+    if (lastDocument == null) {
+      await _firestore
+          .collection('categories')
+          .doc(categoryId)
+          .collection(categoryTitle)
+          .orderBy('title')
+          .limit(documentLimit)
+          .get()
+          .then((value) {
+        //Here we have used tha addAll function in place of = because here
+        //we are getting data in parts. Therefore, this function will append
+        //the data to the last position of list.
+        itemsData.addAll(
+          value.docs.map(
+            (e) => ItemsModel.fromJson(e.data()),
+          ),
+        );
+
+        isLoading = false;
+
+        update();
+
+        lastDocument = value.docs.last;
+
+        if (value.docs.length < documentLimit) {
+          hasMoreData = false;
+        }
+      });
+    } else {
+      isLoading1.value = true;
+
+      await _firestore
+          .collection('categories')
+          .doc(categoryId)
+          .collection(categoryTitle)
+          .orderBy('title')
+          .startAfterDocument(lastDocument!)
+          .limit(documentLimit)
+          .get()
+          .then((value) {
+        itemsData.addAll(value.docs.map((e) => ItemsModel.fromJson(e.data())));
+
+        isLoading1.value = false;
+
+        update();
+
+        lastDocument = value.docs.last;
+        if (value.docs.length < documentLimit) {
+          hasMoreData = false;
+        }
+      });
+    }
+  }
   //Function to calculate discount.
 
   int calculateDiscount(int totalPrice, int sellingPrice) {
@@ -76,5 +148,20 @@ class ItemScreenController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    scrollController.addListener(() {
+      double maxScrollExtent = scrollController.position.maxScrollExtent;
+      double currentPosition = scrollController.position.pixels;
+      double height20 = Get.size.height * 0.20;
+
+      if (maxScrollExtent - currentPosition <= height20) {
+        getPaginatedData();
+      }
+    });
   }
 }

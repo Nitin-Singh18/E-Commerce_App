@@ -18,7 +18,7 @@ class ItemsScreen extends StatelessWidget {
     controller.categoryId = categoryId;
     controller.categoryTitle = categoryTitle;
 
-    controller.getSubCategoryData();
+    controller.getPaginatedData();
 
     return Container(
       color: Colors.blueAccent,
@@ -43,6 +43,7 @@ class ItemsScreen extends StatelessWidget {
                       builder: (value) {
                         if (!value.isLoading) {
                           return ListView.builder(
+                            controller: controller.scrollController,
                             itemCount: value.itemsData.length,
                             itemBuilder: (context, index) {
                               return listViewBuilderItems(
@@ -58,6 +59,18 @@ class ItemsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Obx(() {
+                  if (controller.isLoading1.value) {
+                    return Container(
+                      height: size.height / 10,
+                      width: size.width,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                })
               ],
             ),
           ),
