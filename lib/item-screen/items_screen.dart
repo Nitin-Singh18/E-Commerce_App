@@ -87,7 +87,9 @@ class ItemsScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => const ItemDetailsScreen());
+          Get.to(() => ItemDetailsScreen(
+                id: model.detailId,
+              ));
         },
         child: Container(
           height: size.height / 8,

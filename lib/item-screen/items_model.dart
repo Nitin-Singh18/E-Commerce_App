@@ -1,11 +1,12 @@
 class ItemsModel {
-  late String id, image, title;
+  late String id, image, title, detailId;
 
   late int totalPrice, sellingPrice;
   ItemsModel(
       {required this.id,
       required this.image,
       required this.title,
+      required this.detailId,
       required this.sellingPrice,
       required this.totalPrice});
 
@@ -13,6 +14,7 @@ class ItemsModel {
     id = map['id'];
     title = map['title'];
     image = map['img'];
+    detailId = map['details_id'] ?? "";
     sellingPrice = map['sell_price'];
     totalPrice = map['total_price'];
   }
