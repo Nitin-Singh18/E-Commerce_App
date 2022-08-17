@@ -20,7 +20,7 @@ class ItemScreenController extends GetxController {
   bool hasMoreData = true;
   var isLoading1 = false.obs;
   DocumentSnapshot? lastDocument;
-  int documentLimit = 5;
+  int documentLimit = 7;
 
   //Function to get data for item screen
 

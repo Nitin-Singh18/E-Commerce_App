@@ -4,6 +4,7 @@ import 'package:e_commerce/home_screen/drawer.dart';
 import 'package:e_commerce/home_screen/home_screen_controller.dart';
 import 'package:e_commerce/home_screen/model/categories_model.dart';
 import 'package:e_commerce/item-screen/items_screen.dart';
+import 'package:e_commerce/item_details_screen/item_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -93,7 +94,7 @@ class HomeScreenView extends StatelessWidget {
                             model: controller.categoriesData));
                       }),
 
-                      listViewBuilder(size, controller.categoriesData),
+                      listViewBuilder(size, controller.categoriesData, true),
 
                       SizedBox(
                         height: size.height / 25,
@@ -104,7 +105,7 @@ class HomeScreenView extends StatelessWidget {
                             model: controller.featuredData));
                       }),
 
-                      listViewBuilder(size, controller.featuredData),
+                      listViewBuilder(size, controller.featuredData, false),
                     ],
                   ),
                 ),
@@ -120,7 +121,8 @@ class HomeScreenView extends StatelessWidget {
     );
   }
 
-  Widget listViewBuilder(Size size, List<CategoriesModel> data) {
+  Widget listViewBuilder(
+      Size size, List<CategoriesModel> data, bool isFeatured) {
     return SizedBox(
       height: size.height / 7,
       width: size.width,
@@ -128,21 +130,26 @@ class HomeScreenView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return listViewBuilderItems(size, data[index]);
+          return listViewBuilderItems(size, data[index], isFeatured);
         },
       ),
     );
   }
 
-  Widget listViewBuilderItems(Size size, CategoriesModel categories) {
+  Widget listViewBuilderItems(
+      Size size, CategoriesModel categories, bool isFeatured) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => ItemsScreen(
-                categoryId: categories.id,
-                categoryTitle: categories.title,
-              ));
+          if (isFeatured) {
+            Get.to(() => ItemsScreen(
+                  categoryId: categories.id,
+                  categoryTitle: categories.title,
+                ));
+          } else {
+            Get.to(() => ItemDetailsScreen(id: categories.id));
+          }
         },
         child: SizedBox(
           height: size.height / 7,
