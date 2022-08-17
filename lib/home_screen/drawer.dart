@@ -22,9 +22,9 @@ class HomeScreenDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {},
-            leading: const Icon(Icons.shopping_cart),
+            leading: const Icon(Icons.shopping_bag),
             title: const Text(
-              "Cart",
+              "My Orders",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           ),

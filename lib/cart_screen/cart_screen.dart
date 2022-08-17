@@ -1,3 +1,4 @@
+import 'package:e_commerce/address/address_screen.dart';
 import 'package:e_commerce/cart_screen/cart_screen_controller.dart';
 import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/item_details_screen/item_detail_model.dart';
@@ -46,7 +47,11 @@ class CartScreen extends StatelessWidget {
                             fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(
+                            () => AddressScreen(),
+                          );
+                        },
                         child: Container(
                           height: size.height / 18,
                           width: size.width / 2.8,
