@@ -1,4 +1,6 @@
+import 'package:e_commerce/my_orders/my_orders_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
   const HomeScreenDrawer({Key? key}) : super(key: key);
@@ -21,7 +23,9 @@ class HomeScreenDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const MyOrderScreen());
+            },
             leading: const Icon(Icons.shopping_bag),
             title: const Text(
               "My Orders",
