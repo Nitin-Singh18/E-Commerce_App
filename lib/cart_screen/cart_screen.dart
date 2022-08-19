@@ -41,11 +41,20 @@ class CartScreen extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Rs. 100,000",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
+                      Row(children: [
+                        Text(
+                          "Rs. ${value.totalPrice}",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.lineThrough),
+                        ),
+                        Text(
+                          " ${value.totalSellingPrice}",
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ]),
                       GestureDetector(
                         onTap: () {
                           Get.to(

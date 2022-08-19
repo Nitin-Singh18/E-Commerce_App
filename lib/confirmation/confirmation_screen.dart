@@ -1,8 +1,11 @@
+import 'package:e_commerce/confirmation/confirmation_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ConfirmationScreen extends StatelessWidget {
-  const ConfirmationScreen({Key? key}) : super(key: key);
+  ConfirmationScreen({Key? key}) : super(key: key);
+
+  final controller = Get.put(ConfirmationScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +70,20 @@ class ConfirmationScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Name",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+              controller.name,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
-                "Address",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                controller.address,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
             ),
             Text(
-              "Pincode",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              controller.pincode,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             SizedBox(
               height: size.height / 30,
@@ -123,11 +127,11 @@ class ConfirmationScreen extends StatelessWidget {
             SizedBox(
               height: size.height / 40,
             ),
-            text("Total Price : ", "Rs. 15000"),
+            text("Total Price : ", "Rs. ${controller.totalPrice}"),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
-                child: text("Discount : ", "Rs. 1000")),
-            text("Payable Price : ", "Rs. 14000 "),
+                child: text("Discount : ", "Rs. ${controller.totalDiscount}")),
+            text("Payable Price : ", "Rs. ${controller.payablePrice}"),
           ],
         ),
       ),

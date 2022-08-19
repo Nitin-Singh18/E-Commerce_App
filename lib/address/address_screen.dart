@@ -1,3 +1,4 @@
+import 'package:e_commerce/address/address_screen_controller.dart';
 import 'package:e_commerce/confirmation/confirmation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,20 +6,24 @@ import 'package:get/get.dart';
 class AddressScreen extends StatelessWidget {
   AddressScreen({Key? key}) : super(key: key);
 
-  bool isAaddingAddress = false;
   @override
   Widget build(BuildContext context) {
-    if (isAaddingAddress) {
-      return AddAddressScreen();
-    } else {
-      return EditAddressScreen();
-    }
+    return GetBuilder<AddressScreenController>(
+        init: AddressScreenController(),
+        builder: (value) {
+          if (value.isAddressAvailable) {
+            return EditAddressScreen();
+          } else {
+            return AddAddressScreen();
+          }
+        });
   }
 }
 
 class AddAddressScreen extends StatelessWidget {
-  const AddAddressScreen({Key? key}) : super(key: key);
+  AddAddressScreen({Key? key}) : super(key: key);
 
+  final AddressScreenController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     final Size size = Get.size;
@@ -41,6 +46,7 @@ class AddAddressScreen extends StatelessWidget {
                 height: size.height / 11,
                 width: size.width / 1.1,
                 child: TextField(
+                  controller: controller.nameController,
                   maxLength: 20,
                   decoration: InputDecoration(
                     hintText: "Full Name",
@@ -57,6 +63,7 @@ class AddAddressScreen extends StatelessWidget {
                 height: size.height / 5,
                 width: size.width / 1.1,
                 child: TextField(
+                  controller: controller.addressController,
                   maxLines: 5,
                   decoration: InputDecoration(
                     hintText: "Address",
@@ -73,6 +80,7 @@ class AddAddressScreen extends StatelessWidget {
                 height: size.height / 10,
                 width: size.width / 1.1,
                 child: TextField(
+                  controller: controller.pincodeController,
                   maxLength: 6,
                   decoration: InputDecoration(
                     hintText: "Pincode",
@@ -86,19 +94,24 @@ class AddAddressScreen extends StatelessWidget {
           ),
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
-            child: Container(
-              height: size.height / 12,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: const Color.fromRGBO(8, 42, 58, 1),
-              ),
-              child: const Text(
-                "Proceed",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
+            child: GestureDetector(
+              onTap: () {
+                controller.onTap();
+              },
+              child: Container(
+                height: size.height / 12,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color.fromRGBO(8, 42, 58, 1),
+                ),
+                child: const Text(
+                  "Save",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ),
@@ -109,7 +122,9 @@ class AddAddressScreen extends StatelessWidget {
 }
 
 class EditAddressScreen extends StatelessWidget {
-  const EditAddressScreen({Key? key}) : super(key: key);
+  EditAddressScreen({Key? key}) : super(key: key);
+
+  final AddressScreenController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +153,7 @@ class EditAddressScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => const ConfirmationScreen());
+                Get.to(() => ConfirmationScreen());
               },
               child: Container(
                 height: size.height / 12,
@@ -171,25 +186,27 @@ class EditAddressScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            "Name",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+            controller.name,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Text(
-              "Address",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              controller.address,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
           ),
           Text(
-            "Pincode",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            controller.pincode,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           SizedBox(
             height: size.height / 30,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              controller.onEdit();
+            },
             child: Container(
               height: size.height / 18,
               width: size.width / 1.2,
