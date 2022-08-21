@@ -1,5 +1,7 @@
 import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/my_order_details.dart/my_order_details_screen.dart';
+import 'package:e_commerce/my_orders/my_order_controller.dart';
+import 'package:e_commerce/my_orders/my_orders_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,33 +12,48 @@ class MyOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = Get.size;
 
+    final controller = Get.put(MyOrderController());
+
     return Container(
       color: const Color.fromRGBO(8, 42, 58, 1),
       child: SafeArea(
-          child: Scaffold(
-        appBar: AppBar(
-          title: Text("My Orders"),
-          backgroundColor: const Color.fromRGBO(8, 42, 58, 1),
+        child: GetBuilder<MyOrderController>(
+          builder: (value) {
+            if (!value.isLoading) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text("My Orders"),
+                  backgroundColor: const Color.fromRGBO(8, 42, 58, 1),
+                ),
+                body: SizedBox(
+                  height: size.height,
+                  width: size.width,
+                  child: ListView.builder(
+                      itemCount: value.orders.length,
+                      itemBuilder: (context, index) {
+                        return listViewBuilderItems(size, value.orders[index]);
+                      }),
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
-        body: SizedBox(
-          height: size.height,
-          width: size.width,
-          child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return listViewBuilderItems(size);
-              }),
-        ),
-      )),
+      ),
     );
   }
 
-  Widget listViewBuilderItems(Size size) {
+  Widget listViewBuilderItems(Size size, MyOrdersModel item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => MyOrderDetailsScreen());
+          Get.to(() => MyOrderDetailsScreen(
+                item: item,
+              ));
         },
         child: Container(
           height: size.height / 8,
@@ -46,9 +63,9 @@ class MyOrderScreen extends StatelessWidget {
               Container(
                 height: size.height / 8,
                 width: size.width / 4.5,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(image),
+                    image: NetworkImage(item.image),
                   ),
                 ),
               ),
@@ -59,7 +76,7 @@ class MyOrderScreen extends StatelessWidget {
                 child: SizedBox(
                   child: RichText(
                     text: TextSpan(
-                      text: "Product Name\n",
+                      text: "${item.name}\n",
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -67,10 +84,13 @@ class MyOrderScreen extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: "Status : Delivered",
-                          style: const TextStyle(
+                          text: item.status == 0
+                              ? "Status : Pending"
+                              : "Status : Delivered",
+                          style: TextStyle(
                             fontSize: 16,
-                            color: Colors.green,
+                            color:
+                                item.status == 0 ? Colors.grey : Colors.green,
                             fontWeight: FontWeight.w500,
                           ),
                         )
