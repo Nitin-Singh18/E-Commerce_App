@@ -36,7 +36,9 @@ class ConfirmationScreen extends StatelessWidget {
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                controller.onPay();
+              },
               child: Container(
                 height: size.height / 12,
                 width: size.width / 1.2,
