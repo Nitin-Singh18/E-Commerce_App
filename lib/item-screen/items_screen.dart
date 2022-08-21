@@ -69,7 +69,7 @@ class ItemsScreen extends StatelessWidget {
                       child: const CircularProgressIndicator(),
                     );
                   } else {
-                    return SizedBox();
+                    return const SizedBox();
                   }
                 })
               ],
@@ -91,7 +91,7 @@ class ItemsScreen extends StatelessWidget {
                 id: model.detailId,
               ));
         },
-        child: Container(
+        child: SizedBox(
           height: size.height / 8,
           width: size.width / 1.1,
           child: Row(

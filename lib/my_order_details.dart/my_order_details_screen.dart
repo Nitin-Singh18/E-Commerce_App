@@ -1,4 +1,3 @@
-import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/my_orders/my_orders_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -84,7 +83,7 @@ class MyOrderDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Order  Details",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),

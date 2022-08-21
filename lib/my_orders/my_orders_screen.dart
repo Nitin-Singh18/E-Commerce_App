@@ -1,4 +1,3 @@
-import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/my_order_details.dart/my_order_details_screen.dart';
 import 'package:e_commerce/my_orders/my_order_controller.dart';
 import 'package:e_commerce/my_orders/my_orders_model.dart';
@@ -22,7 +21,7 @@ class MyOrderScreen extends StatelessWidget {
             if (!value.isLoading) {
               return Scaffold(
                 appBar: AppBar(
-                  title: Text("My Orders"),
+                  title: const Text("My Orders"),
                   backgroundColor: const Color.fromRGBO(8, 42, 58, 1),
                 ),
                 body: SizedBox(
@@ -55,7 +54,7 @@ class MyOrderScreen extends StatelessWidget {
                 item: item,
               ));
         },
-        child: Container(
+        child: SizedBox(
           height: size.height / 8,
           width: size.width / 1.1,
           child: Row(

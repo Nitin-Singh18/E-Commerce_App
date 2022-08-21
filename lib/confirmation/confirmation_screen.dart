@@ -122,7 +122,7 @@ class ConfirmationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Price  Details",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
             ),

@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                               "E-Commerce",
                               style: TextStyle(
                                   letterSpacing: 1.2,
-                                  color: Color.fromRGBO(9, 32, 196, 1),
+                                  color: const Color.fromRGBO(9, 32, 196, 1),
                                   fontSize: size.width / 9,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget {
                                   Container(
                                     height: size.height / 10,
                                     width: size.width / 150,
-                                    color: Color.fromRGBO(9, 32, 196, 1),
+                                    color: const Color.fromRGBO(9, 32, 196, 1),
                                   ),
                                   SizedBox(width: size.width / 40),
                                   RichText(

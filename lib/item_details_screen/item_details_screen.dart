@@ -1,5 +1,4 @@
 import 'package:e_commerce/cart_screen/cart_screen.dart';
-import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/item_details_screen/item_detail_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

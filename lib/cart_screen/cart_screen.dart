@@ -1,6 +1,5 @@
 import 'package:e_commerce/address/address_screen.dart';
 import 'package:e_commerce/cart_screen/cart_screen_controller.dart';
-import 'package:e_commerce/const/const.dart';
 import 'package:e_commerce/item_details_screen/item_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,7 +104,7 @@ class CartScreen extends StatelessWidget {
         ),
         child: Column(children: [
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: size.height / 8,
               width: size.width / 1.1,
               child: Row(
@@ -164,7 +163,7 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 25.0),
+            padding: const EdgeInsets.only(left: 25.0),
             child: Text(
               "Will be delivered in ${model.deliveryDays} days",
               style: const TextStyle(

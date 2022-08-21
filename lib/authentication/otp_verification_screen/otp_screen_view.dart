@@ -17,7 +17,7 @@ class OtpVerificationScreen extends StatelessWidget {
       color: Colors.blueAccent,
       child: SafeArea(
           child: Scaffold(
-        body: Container(
+        body: SizedBox(
           height: size.height,
           width: size.width,
           child: SingleChildScrollView(

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:e_commerce/authentication/login_screen/login_screen_view.dart';
 import 'package:e_commerce/home_screen/home_screen_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
